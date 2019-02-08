@@ -1,6 +1,7 @@
 package com.example.vermuci
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Point
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,8 @@ import android.view.MotionEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+
+const val EXTRA_SCORE = "SCORE"
 
 class MainActivity : AppCompatActivity() {
 
@@ -78,6 +81,8 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun position(){
+        hit()
+
         foodX -= foodSpeed
         if(foodX < 0){
             foodX = screenWidth + 20
@@ -158,5 +163,53 @@ class MainActivity : AppCompatActivity() {
         }
 
         return true
+    }
+
+    fun hit(){
+        val foodCenterX = foodX + food.width / 2
+        val foodCenterY = foodY + food.height / 2
+
+        if(foodCenterX in 0..playerSize && playerY <= foodCenterY &&
+                foodCenterY <= playerY + playerSize){
+
+            score += 1
+            foodX = -10
+        }
+
+        val diamondCenterX = diamondX + diamond.width / 2
+        val diamondCenterY = diamondY + diamond.height / 2
+
+        if(diamondCenterX in 0..playerSize && playerY <= diamondCenterY &&
+            diamondCenterY <= playerY + playerSize){
+
+            score += 3
+            diamondX = -10
+        }
+
+        val enemy1CenterX = enemy1X + enemy1.width / 2
+        val enemy1CenterY = enemy1Y + enemy1.height / 2
+
+        if(enemy1CenterX in 0..playerSize && playerY <= enemy1CenterY &&
+            enemy1CenterY <= playerY + playerSize){
+
+            timer.cancel()
+
+            val intent = Intent(applicationContext, ResultActivity::class.java)
+            intent.putExtra(EXTRA_SCORE, score)
+            startActivity(intent)
+        }
+
+        val enemy2CenterX = enemy2X + enemy2.width / 2
+        val enemy2CenterY = enemy2Y + enemy2.height / 2
+
+        if(enemy2CenterX in 0..playerSize && playerY <= enemy2CenterY &&
+            enemy2CenterY <= playerY + playerSize){
+
+            timer.cancel()
+
+            val intent = Intent(applicationContext, ResultActivity::class.java)
+            intent.putExtra(EXTRA_SCORE, score)
+            startActivity(intent)
+        }
     }
 }
