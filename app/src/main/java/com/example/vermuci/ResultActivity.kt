@@ -3,7 +3,6 @@ package com.example.vermuci
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
@@ -45,7 +44,7 @@ class ResultActivity : AppCompatActivity() {
         editor.apply()
     }
 
-    fun tryAgain(){
+    fun tryAgain(view: View){
         startActivity(Intent(applicationContext, StartActivity::class.java))
         finish()
     }

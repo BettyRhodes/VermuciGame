@@ -6,6 +6,7 @@ import android.graphics.Point
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
@@ -218,6 +219,42 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, ResultActivity::class.java)
             intent.putExtra(EXTRA_SCORE, score)
             startActivity(intent)
+        }
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean{
+        if(event.action == KeyEvent.ACTION_DOWN){
+            when(event.keyCode){
+                KeyEvent.KEYCODE_BACK -> return true
+            }
+        }
+        return super.dispatchKeyEvent(event)
+    }
+
+    fun pauseGame(view: View){
+        if(!pause_flag){
+            pause_flag = true
+            timer.cancel()
+
+            val drawable = resources.getDrawable(R.drawable.ic_action_go)
+            pause_button.setBackgroundDrawable(drawable)
+            frame_lb.visibility = View.VISIBLE
+        }else {
+            pause_flag = false
+
+            val drawable = resources.getDrawable(R.drawable.ic_action_paused)
+            pause_button.setBackgroundDrawable(drawable)
+            frame_lb.visibility = View.GONE
+
+            timer = Timer()
+            timer.schedule(object : TimerTask(){
+                override fun run() {
+                    handler.post{
+                        position()
+                    }
+                }
+
+            }, 0 , 20)
         }
     }
 }

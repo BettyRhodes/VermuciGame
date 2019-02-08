@@ -1,7 +1,5 @@
 package com.example.vermuci
 
-import android.support.v7.app.AppCompatActivity
-import android.R
 import android.content.Context
 import android.media.AudioManager
 import android.media.SoundPool

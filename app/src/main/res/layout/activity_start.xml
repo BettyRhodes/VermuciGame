@@ -9,7 +9,7 @@
         tools:context=".StartActivity">
     
     <ImageButton
-            android:id="@+id/more_btn"
+            android:id="@+id/more"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"

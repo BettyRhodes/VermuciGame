@@ -31,6 +31,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:onClick="pauseGame"
                 android:background="@drawable/ic_action_pause"
                 android:id="@+id/pause_button"
                 tools:ignore="RtlHardcoded"/>
@@ -119,6 +120,7 @@
                     android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/ic_action_game"
+                    android:onClick="pauseGame"
                     android:layout_marginTop="170dp"
                     android:id="@+id/start_lb"/>
 
