@@ -45,10 +45,14 @@ class MainActivity : AppCompatActivity() {
     private var screenWidth = 0
     private var screenHeight = 0
 
+    private var soundEffects: SoundEffects? = null
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        soundEffects = SoundEffects(applicationContext)
 
         val wm = windowManager
         val display = wm.defaultDisplay
@@ -174,6 +178,7 @@ class MainActivity : AppCompatActivity() {
 
             score += 1
             foodX = -10
+            soundEffects?.collectSound()
         }
 
         val diamondCenterX = diamondX + diamond.width / 2
@@ -184,6 +189,7 @@ class MainActivity : AppCompatActivity() {
 
             score += 3
             diamondX = -10
+            soundEffects?.collectSound()
         }
 
         val enemy1CenterX = enemy1X + enemy1.width / 2
@@ -193,6 +199,7 @@ class MainActivity : AppCompatActivity() {
             enemy1CenterY <= playerY + playerSize){
 
             timer.cancel()
+            soundEffects?.loseSound()
 
             val intent = Intent(applicationContext, ResultActivity::class.java)
             intent.putExtra(EXTRA_SCORE, score)
@@ -206,6 +213,7 @@ class MainActivity : AppCompatActivity() {
             enemy2CenterY <= playerY + playerSize){
 
             timer.cancel()
+            soundEffects?.loseSound()
 
             val intent = Intent(applicationContext, ResultActivity::class.java)
             intent.putExtra(EXTRA_SCORE, score)
