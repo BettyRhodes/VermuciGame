@@ -78,6 +78,38 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun position(){
+        foodX -= foodSpeed
+        if(foodX < 0){
+            foodX = screenWidth + 20
+            foodY = Math.floor(Math.random() * (frameHeight - food.height)).toInt()
+        }
+        food.x = foodX.toFloat()
+        food.y = foodY.toFloat()
+
+        enemy1X -= enemy1Speed
+        if(enemy1X < 0){
+            enemy1X = screenWidth + 10
+            enemy1Y = Math.floor(Math.random() * (frameHeight - enemy1.height)).toInt()
+        }
+        enemy1.x = enemy1X.toFloat()
+        enemy1.y = enemy1Y.toFloat()
+
+        enemy2X -= enemy2Speed
+        if(enemy2X < 0){
+            enemy2X = screenWidth + 4000
+            enemy2Y = Math.floor(Math.random() * (frameHeight - enemy2.height)).toInt()
+        }
+        enemy2.x = enemy2X.toFloat()
+        enemy2.y = enemy2Y.toFloat()
+
+        diamondX -= diamondSpeed
+        if(diamondX < 0){
+            diamondX = screenWidth + 5000
+            diamondY = Math.floor(Math.random() * (frameHeight - diamond.height)).toInt()
+        }
+        diamond.x = diamondX.toFloat()
+        diamond.y = diamondY.toFloat()
+
         if(action_flag){
             playerY -= playerSpeed
             player.setImageResource(R.drawable.player1)
