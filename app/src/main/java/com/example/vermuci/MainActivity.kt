@@ -55,6 +55,9 @@ class MainActivity : AppCompatActivity() {
 
         soundEffects = SoundEffects(applicationContext)
 
+        enemy2.visibility = View.GONE
+        enemy1.visibility = View.GONE
+
         val wm = windowManager
         val display = wm.defaultDisplay
         val size = Point()
@@ -155,6 +158,8 @@ class MainActivity : AppCompatActivity() {
                 override fun run() {
                     handler.post {
                         position()
+                        enemy2.visibility = View.VISIBLE
+                        enemy1.visibility = View.VISIBLE
                     }
                 }
 
