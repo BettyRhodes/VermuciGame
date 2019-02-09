@@ -112,11 +112,11 @@
                 android:background="@drawable/ic_action_name"/>
 
         <ImageButton
-                android:id="@+id/share_btn"
+                android:id="@+id/shop_btn"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/ic_action_share"/>
+                android:background="@drawable/ic_action_shop"/>
 
     </LinearLayout>
 </RelativeLayout>

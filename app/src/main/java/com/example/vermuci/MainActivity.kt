@@ -1,6 +1,7 @@
 package com.example.vermuci
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.support.v7.app.AppCompatActivity
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 const val EXTRA_SCORE = "SCORE"
+const val EXTRA_PREFS = "PREFS"
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,10 +50,19 @@ class MainActivity : AppCompatActivity() {
 
     private var soundEffects: SoundEffects? = null
 
+    private var coins: Int = 0
+    private var action = 0
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val settings = getSharedPreferences(EXTRA_PREFS, Context.MODE_PRIVATE)
+        action = settings.getInt(EXTRA_ACTION, 1)
+        coins = settings.getInt(EXTRA_COINS, 0)
+
+        player.setImageResource(resources.getIdentifier("player" + action + "a", "drawable", packageName))
 
         soundEffects = SoundEffects(applicationContext)
 
@@ -85,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         enemy2.y = -80f
 
         score_text.text = "Score: 0"
+        tv_coins.text = "" + coins
     }
 
     @SuppressLint("SetTextI18n")
@@ -125,10 +137,12 @@ class MainActivity : AppCompatActivity() {
 
         if(action_flag){
             playerY -= playerSpeed
-            player.setImageResource(R.drawable.player1)
+            //player.setImageResource(R.drawable.player1)
+            player.setImageResource(resources.getIdentifier("player" + action + "a", "drawable", packageName))
         }else{
             playerY += playerSpeed
-            player.setImageResource(R.drawable.player2)
+            //player.setImageResource(R.drawable.player2)
+            player.setImageResource(resources.getIdentifier("player" + action + "b", "drawable", packageName))
         }
 
         if(playerY < 0)
@@ -138,7 +152,9 @@ class MainActivity : AppCompatActivity() {
             playerY = frameHeight - playerSize
 
         player.y = playerY.toFloat()
+
         score_text.text = "Score: $score"
+        tv_coins.text = "" + coins
     }
 
     override fun onTouchEvent(me: MotionEvent): Boolean{
@@ -175,6 +191,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    @SuppressLint("CommitPrefEdits")
     fun hit(){
         val foodCenterX = foodX + food.width / 2
         val foodCenterY = foodY + food.height / 2
@@ -190,9 +207,10 @@ class MainActivity : AppCompatActivity() {
         val diamondCenterX = diamondX + diamond.width / 2
         val diamondCenterY = diamondY + diamond.height / 2
 
-        if(diamondCenterX in 0..playerSize && playerY <= diamondCenterY &&
-            diamondCenterY <= playerY + playerSize){
+        if(diamondCenterX in 0..playerSize &&
+            playerY <= diamondCenterY && diamondCenterY <= playerY + playerSize){
 
+            coins++
             score += 3
             diamondX = -10
             soundEffects?.collectSound()
@@ -207,6 +225,11 @@ class MainActivity : AppCompatActivity() {
             timer.cancel()
             soundEffects?.loseSound()
 
+            val settings = getSharedPreferences(EXTRA_PREFS, Context.MODE_PRIVATE)
+            val editor = settings.edit()
+            editor.putInt(EXTRA_COINS, coins)
+            editor.apply()
+
             val intent = Intent(applicationContext, ResultActivity::class.java)
             intent.putExtra(EXTRA_SCORE, score)
             startActivity(intent)
@@ -220,6 +243,11 @@ class MainActivity : AppCompatActivity() {
 
             timer.cancel()
             soundEffects?.loseSound()
+
+            val settings = getSharedPreferences(EXTRA_PREFS, Context.MODE_PRIVATE)
+            val editor = settings.edit()
+            editor.putInt(EXTRA_COINS, coins)
+            editor.apply()
 
             val intent = Intent(applicationContext, ResultActivity::class.java)
             intent.putExtra(EXTRA_SCORE, score)

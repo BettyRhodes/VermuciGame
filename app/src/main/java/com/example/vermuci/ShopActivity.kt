@@ -9,6 +9,9 @@ import android.support.design.widget.Snackbar
 import android.view.View
 import kotlinx.android.synthetic.main.activity_shop.*
 
+const val EXTRA_COINS = "COINS"
+const val EXTRA_ACTION = "ACTION"
+
 class ShopActivity : AppCompatActivity() {
 
     private var coins = 0
@@ -23,9 +26,9 @@ class ShopActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
 
-        val settings = getSharedPreferences("PREFS", Context.MODE_PRIVATE)
-        coins = settings.getInt("COINS", 0)
-        action = settings.getInt("ACTION", 1)
+        val settings = getSharedPreferences(EXTRA_PREFS, Context.MODE_PRIVATE)
+        coins = settings.getInt(EXTRA_COINS, 0)
+        action = settings.getInt(EXTRA_ACTION, 1)
         shop2 = settings.getBoolean("SHOP2", false)
         shop3 = settings.getBoolean("SHOP3", false)
         shop4 = settings.getBoolean("SHOP4", false)
@@ -42,7 +45,7 @@ class ShopActivity : AppCompatActivity() {
         shopP1.setOnClickListener {
             action = 1
             val editor = settings.edit()
-            editor.putInt("ACTION", action)
+            editor.putInt(EXTRA_ACTION, action)
             editor.apply()
             startActivity(Intent(this@ShopActivity, StartActivity::class.java))
         }
@@ -52,7 +55,7 @@ class ShopActivity : AppCompatActivity() {
                 shop2 -> {
                     action = 2
                     val editor = settings.edit()
-                    editor.putInt("ACTION", action)
+                    editor.putInt(EXTRA_ACTION, action)
                     editor.apply()
                     startActivity(Intent(this@ShopActivity, StartActivity::class.java))
                 }
@@ -65,10 +68,10 @@ class ShopActivity : AppCompatActivity() {
                     unlock2.visibility = View.GONE
 
                     val editor = settings.edit()
-                    editor.putInt("ACTION", action)
-                    editor.putInt("COINS", coins)
-                    editor.putBoolean("SHOP2", shop2)
-                    editor.apply()
+                    editor?.putInt(EXTRA_ACTION, action)
+                    editor?.putInt(EXTRA_COINS, coins)
+                    editor?.putBoolean("SHOP2", shop2)
+                    editor?.apply()
                     startActivity(Intent(this@ShopActivity, StartActivity::class.java))
                 }
                 else -> Snackbar.make(it, "Not enough coins", Snackbar.LENGTH_SHORT).show()
@@ -80,7 +83,7 @@ class ShopActivity : AppCompatActivity() {
                 shop3 -> {
                     action = 3
                     val editor = settings.edit()
-                    editor.putInt("ACTION", action)
+                    editor.putInt(EXTRA_ACTION, action)
                     editor.apply()
                     startActivity(Intent(this@ShopActivity, StartActivity::class.java))
                 }
@@ -93,8 +96,8 @@ class ShopActivity : AppCompatActivity() {
                     unlock2.visibility = View.GONE
 
                     val editor = settings.edit()
-                    editor.putInt("ACTION", action)
-                    editor.putInt("COINS", coins)
+                    editor.putInt(EXTRA_ACTION, action)
+                    editor.putInt(EXTRA_COINS, coins)
                     editor.putBoolean("SHOP3", shop3)
                     editor.apply()
                     startActivity(Intent(this@ShopActivity, StartActivity::class.java))
@@ -108,7 +111,7 @@ class ShopActivity : AppCompatActivity() {
                 shop4 -> {
                     action = 4
                     val editor = settings.edit()
-                    editor.putInt("ACTION", action)
+                    editor.putInt(EXTRA_ACTION, action)
                     editor.apply()
                     startActivity(Intent(this@ShopActivity, StartActivity::class.java))
                 }
@@ -121,8 +124,8 @@ class ShopActivity : AppCompatActivity() {
                     unlock2.visibility = View.GONE
 
                     val editor = settings.edit()
-                    editor.putInt("ACTION", action)
-                    editor.putInt("COINS", coins)
+                    editor.putInt(EXTRA_ACTION, action)
+                    editor.putInt(EXTRA_COINS, coins)
                     editor.putBoolean("SHOP4", shop4)
                     editor.apply()
                     startActivity(Intent(this@ShopActivity, StartActivity::class.java))
@@ -133,6 +136,7 @@ class ShopActivity : AppCompatActivity() {
 
         home_button.setOnClickListener {
             startActivity(Intent(this@ShopActivity, StartActivity::class.java))
+            finish()
         }
 
     }
