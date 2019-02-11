@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.View
+import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_shop.*
 
 const val EXTRA_COINS = "COINS"
@@ -25,6 +26,10 @@ class ShopActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         val settings = getSharedPreferences(EXTRA_PREFS, Context.MODE_PRIVATE)
         coins = settings.getInt(EXTRA_COINS, 0)

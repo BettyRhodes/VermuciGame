@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.PopupMenu
 import kotlinx.android.synthetic.main.activity_start.*
 
@@ -15,6 +16,10 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         play_btn.setOnClickListener {
             startActivity(Intent(applicationContext, MainActivity::class.java))

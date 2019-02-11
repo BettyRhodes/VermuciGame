@@ -12,8 +12,8 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_screen_main)
 
-       // window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-       //     WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         val thread = Thread{
             try {
